@@ -129,5 +129,17 @@ export class AppComponent {
         console.log('Connected to Hub');
       })
       .catch((err) => console.log('Error while starting connection: ' + err));
+
+      this.hubConnection.on('RightAnswer', () => {
+      this.zone.run(() => {
+        this.nbRightAnswers++;
+        alert("Bonne réponse !");
+      });
+    });
+    this.hubConnection.on('WrongAnswer', (rightAnswer:number) => {
+      this.zone.run(() => {
+        alert("Mauvaise réponse ! La bonne réponse était " + rightAnswer);
+      });
+    });
   }
 }
